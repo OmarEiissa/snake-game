@@ -71,6 +71,19 @@ window.onload = () => {
   startBtn.addEventListener("click", startGame);
   restartBtn.addEventListener("click", resetGame);
   gameOverContainer.style.display = "none";
+
+  document
+    .getElementById("upBtn")
+    .addEventListener("touchstart", () => changeDirection(0, -1));
+  document
+    .getElementById("leftBtn")
+    .addEventListener("touchstart", () => changeDirection(-1, 0));
+  document
+    .getElementById("rightBtn")
+    .addEventListener("touchstart", () => changeDirection(1, 0));
+  document
+    .getElementById("downBtn")
+    .addEventListener("touchstart", () => changeDirection(0, 1));
 };
 
 function startGame() {
@@ -175,6 +188,24 @@ function updateHighScore() {
 function createRect(x, y, width, height, color) {
   canvasContext.fillStyle = color;
   canvasContext.fillRect(x, y, width, height);
+}
+
+function changeDirection(x, y) {
+  if (!gameOver) {
+    if (x === -1 && snake.rotateX !== 1) {
+      snake.rotateX = -1;
+      snake.rotateY = 0;
+    } else if (x === 1 && snake.rotateX !== -1) {
+      snake.rotateX = 1;
+      snake.rotateY = 0;
+    } else if (y === -1 && snake.rotateY !== 1) {
+      snake.rotateX = 0;
+      snake.rotateY = -1;
+    } else if (y === 1 && snake.rotateY !== -1) {
+      snake.rotateX = 0;
+      snake.rotateY = 1;
+    }
+  }
 }
 
 window.addEventListener("keydown", (event) => {
