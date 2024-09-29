@@ -39,7 +39,7 @@ class Apple {
           break;
         }
       }
-      this.color = "#43a047";
+      this.color = "#ff1744"; // تغيير لون التفاحة
       this.size = snakeSize;
       if (!isTouching) break;
     }
@@ -111,7 +111,7 @@ function checkHitSelf() {
   for (let i = 0; i < snake.tail.length - 1; i++) {
     if (head.x === snake.tail[i].x && head.y === snake.tail[i].y) {
       gameOver = true;
-      break; 
+      break;
     }
   }
 }
@@ -133,6 +133,12 @@ function eatApple() {
     apple = new Apple(snake.size, snake.tail);
     score++;
     scoreElement.textContent = "Score: " + score;
+
+    // تأثير بسيط لتغيير لون التفاح عند تناوله
+    apple.color = "#ffeb3b"; // تغيير اللون للتفاح
+    setTimeout(() => {
+      apple.color = "#ff1744"; // العودة للون الأصلي بعد فترة
+    }, 100);
   }
 }
 
@@ -144,7 +150,7 @@ function draw() {
       segment.y + 2.5,
       snake.size - 5,
       snake.size - 5,
-      "#fff"
+      "#00e676" // تغيير لون الثعبان
     );
   }
   createRect(apple.x, apple.y, apple.size, apple.size, apple.color);
@@ -172,10 +178,15 @@ function createRect(x, y, width, height, color) {
 }
 
 window.addEventListener("keydown", (event) => {
+  if (!gameOver && (event.keyCode === 32 || event.keyCode === 13)) {
+    startGame();
+  }
+
   if (gameOver && (event.keyCode === 32 || event.keyCode === 13)) {
     resetGame();
     gameOver = false;
   }
+
   setTimeout(() => {
     if (!gameOver) {
       if (
@@ -204,5 +215,5 @@ window.addEventListener("keydown", (event) => {
         snake.rotateY = 1;
       }
     }
-  }, 1);
+  }, 10);
 });
