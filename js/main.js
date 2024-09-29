@@ -52,7 +52,9 @@ let snake = new Snake(20, 20, 20);
 let apple = new Apple(snake.size, snake.tail);
 let gameInterval;
 let gameOver = false;
+let score = 0;
 
+const scoreElement = document.getElementById("score");
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 const startContainer = document.querySelector(".start-container");
@@ -74,6 +76,8 @@ function resetGame() {
   snake = new Snake(20, 20, 20);
   apple = new Apple(snake.size, snake.tail);
   gameOver = false;
+  score = 0;
+  scoreElement.textContent = "Score: " + score;
   clearInterval(gameInterval);
   gameLoop();
   gameOverContainer.style.display = "none";
@@ -120,6 +124,8 @@ function eatApple() {
   ) {
     snake.growing = true;
     apple = new Apple(snake.size, snake.tail);
+    score++;
+    scoreElement.textContent = "Score: " + score;
   }
 }
 
@@ -135,13 +141,6 @@ function draw() {
     );
   }
   createRect(apple.x, apple.y, apple.size, apple.size, apple.color);
-  canvasContext.font = "20px Arial";
-  canvasContext.fillStyle = "#2E7D32";
-  canvasContext.fillText(
-    "Score: " + (snake.tail.length - 1),
-    canvas.width - 120,
-    18
-  );
   if (gameOver) {
     gameOverContainer.style.display = "flex";
     clearInterval(gameInterval);
