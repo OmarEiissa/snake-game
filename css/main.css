@@ -1,5 +1,7 @@
 body {
   background-color: #282c34;
+  font-family: Arial, sans-serif;
+  color: #fff;
 }
 
 * {
@@ -26,7 +28,6 @@ canvas {
   left: 10px;
   color: #2e7d32;
   font-size: 20px;
-  font-family: Arial, sans-serif;
 }
 
 .start-container,
@@ -45,12 +46,7 @@ canvas {
 
 h1 {
   color: red;
-  font: 50px arial;
-}
-
-p {
-  color: white;
-  font: 20px arial;
+  font-size: 50px;
 }
 
 button {

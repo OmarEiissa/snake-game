@@ -39,7 +39,7 @@ class Apple {
           break;
         }
       }
-      this.color = "#2E7D32";
+      this.color = "#43a047";
       this.size = snakeSize;
       if (!isTouching) break;
     }
@@ -54,13 +54,19 @@ let gameInterval;
 let gameOver = false;
 let score = 0;
 
+let highScore = localStorage.getItem("highScore")
+  ? parseInt(localStorage.getItem("highScore"))
+  : 0;
+
 const scoreElement = document.getElementById("score");
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
+const highScoreElement = document.getElementById("high-score");
 const startContainer = document.querySelector(".start-container");
 const gameOverContainer = document.querySelector(".restart-container");
 
 window.onload = () => {
+  highScoreElement.textContent = "High Score: " + highScore;
   startContainer.style.display = "block";
   startBtn.addEventListener("click", startGame);
   restartBtn.addEventListener("click", resetGame);
@@ -105,6 +111,7 @@ function checkHitSelf() {
   for (let i = 0; i < snake.tail.length - 1; i++) {
     if (head.x === snake.tail[i].x && head.y === snake.tail[i].y) {
       gameOver = true;
+      break; 
     }
   }
 }
@@ -141,9 +148,21 @@ function draw() {
     );
   }
   createRect(apple.x, apple.y, apple.size, apple.size, apple.color);
+
+  scoreElement.textContent = "Score: " + score;
+
   if (gameOver) {
+    updateHighScore();
+    highScoreElement.textContent = "High Score: " + highScore;
     gameOverContainer.style.display = "flex";
     clearInterval(gameInterval);
+  }
+}
+
+function updateHighScore() {
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("highScore", highScore);
   }
 }
 
