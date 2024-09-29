@@ -6,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .container {
   width: 100vw;
   height: 100vh;
@@ -15,5 +16,5 @@ body {
 }
 
 canvas {
-  border: 5px solid greenyellow;
+  border: 5px solid #2e7d32;
 }
