@@ -53,6 +53,8 @@ let apple = new Apple(snake.size, snake.tail);
 let gameInterval;
 let gameOver = false;
 let score = 0;
+let speed = 15;
+let speedIncreaseRate = 0.1;
 
 let highScore = localStorage.getItem("highScore")
   ? parseInt(localStorage.getItem("highScore"))
@@ -96,6 +98,7 @@ function resetGame() {
   apple = new Apple(snake.size, snake.tail);
   gameOver = false;
   score = 0;
+  speed = 15;
   scoreElement.textContent = "Score: " + score;
   clearInterval(gameInterval);
   gameLoop();
@@ -103,7 +106,7 @@ function resetGame() {
 }
 
 function gameLoop() {
-  gameInterval = setInterval(show, 1000 / 15);
+  gameInterval = setInterval(show, 1000 / speed);
 }
 
 function show() {
@@ -147,23 +150,26 @@ function eatApple() {
     score++;
     scoreElement.textContent = "Score: " + score;
 
-    // تأثير بسيط لتغيير لون التفاح عند تناوله
-    apple.color = "#ffeb3b"; // تغيير اللون للتفاح
+    speed += speedIncreaseRate;
+    clearInterval(gameInterval);
+    gameLoop();
+
+    apple.color = "#ffeb3b";
     setTimeout(() => {
-      apple.color = "#ff1744"; // العودة للون الأصلي بعد فترة
+      apple.color = "#ff1744";
     }, 100);
   }
 }
 
 function draw() {
-  createRect(0, 0, canvas.width, canvas.height, "#263238");
+  createRect(0, 0, canvas.width, canvas.height, "transparent");
   for (let segment of snake.tail) {
     createRect(
       segment.x + 2.5,
       segment.y + 2.5,
       snake.size - 5,
       snake.size - 5,
-      "#00e676" // تغيير لون الثعبان
+      "#00e676"
     );
   }
   createRect(apple.x, apple.y, apple.size, apple.size, apple.color);
@@ -246,5 +252,5 @@ window.addEventListener("keydown", (event) => {
         snake.rotateY = 1;
       }
     }
-  }, 10);
+  }, 1);
 });
